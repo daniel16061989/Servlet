@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#btn').click(function(){
+		$.ajax({
+			url: 'Servlet',
+			type: "POST",
+			//dataType: "json", 
+			success: function(data){	
+				alert(data.lenth);
+				/*for(int i = 0; i < data.length; i++){
+					alert("nombre: "+data.nombre+" apellido: "+data.apellido);
+				}*/
+			}
+		});
+	});	
+});
+</script>
+
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<input type="button" id="btn" value="enviar a servlet" />
+</body>
+</html>
