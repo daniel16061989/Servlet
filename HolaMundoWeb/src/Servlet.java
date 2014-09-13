@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 
-import com.google.gson.*;
-import com.google.*;
+
 /**
  * Servlet implementation class Servlet
  */
@@ -43,26 +43,13 @@ public class Servlet extends HttpServlet {
 		
 		List<Person> listaPersonas = new ArrayList<Person>();
 		listaPersonas.add(new Person("juan","sanchez"));
-		listaPersonas.add(new Person("pepe","Perez"));
-		Person a = new Person("juan manuel","Sanchez");
-		//JSONObject json = new JSONObject();
-		//JSONArray personas = new JSONArray(listaPersonas);
-		/*
-		for (int i = 0; i < listaPersonas.size(); i++) {
-						
-		}
-		*/
-		//response.setContentType("text/html");
+		listaPersonas.add(new Person("pepe","Perez"));		
 		response.setContentType("application/json");
-		
-		JSONArray jsArr = new JSONArray(listaPersonas);
-		//jsArr.put(listaPersonas);
-		response.getWriter().print(jsArr);
-		/*
-		JsonObject gson = new JsonObject();
-		String json = gson.toJson(listaPersonas, Person);
-		*/
-		 //List<String> target2 = gson.fromJson(json, listType);
+		//response.setContentType("text/html");
+		String personasJson = new Gson().toJson(listaPersonas);
+		//System.out.println(personasJson);
+		Person p = new Person("juan","sanchez");
+		response.getWriter().print(personasJson);			
 	}
 
 }

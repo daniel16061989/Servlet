@@ -8,12 +8,15 @@ $(document).ready(function(){
 		$.ajax({
 			url: 'Servlet',
 			type: "POST",
-			//dataType: "json", 
-			success: function(data){	
-				alert(data.lenth);
-				/*for(int i = 0; i < data.length; i++){
-					alert("nombre: "+data.nombre+" apellido: "+data.apellido);
-				}*/
+			dataType: "json", 
+			success: function(data){
+				alert(data.length);
+				
+				$('body').append("<table id='tbl' border=1></table>");
+				
+				for(var i=0; i<=data.length; i++){
+					$('#tbl').append("<tr><td>"+data[i].nombre +"</td><td>"+data[i].apellido+"</td></tr>"); 
+				}
 			}
 		});
 	});	
