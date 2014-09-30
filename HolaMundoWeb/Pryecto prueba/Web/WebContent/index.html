@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="ISO-8859-1">
+<script src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<!-- 
+<script src="js/app.js"></script>
+<script src="js/factories/person_factory.js"></script>
+<script src="js/controllers/person_controller.js"></script>
+ -->
+<script type="text/javascript">
+$(document).ready(function(){
+	/*
+	$('#btn').click(function(){
+		$.ajax({
+			url:'PersonServlet',
+			type: "POST",
+			dataType: "json",
+			success: function(data){
+				for(var i=0; i<data.length; i++){
+					$('#tbl').append("<tr><td>"+data[i].nombre+"</td><td>"+data[i].apellido+"</td><td>"+data[i].dni+"</td></tr>");
+				}
+			}
+		});
+	});	
+*/
+
+});
+//Modulo
+var app = angular.module("app", []);
+
+//Factory
+app.factory('PersonasFactory', function($http){	
+	/*
+	var personas = function(){
+		return 	$http.post('/Web/PersonServlet').then(function(data){
+			return data.data;
+			});
+	};
+	*/
+	var personas  = function() {
+	      var promise = $http.post('/Web/PersonServlet',{dataToServ:'none'}).then(function (response) {
+		        return response.data;
+		      });
+		      return promise;
+		    };
+	
+		    
+	var agregarPersonas = function(){
+		var promise = $http.post('/Web/PersonServlet',{dataToSev:[{name:'juan',apellido:'perez',dni:37488888}]});
+	}	    
+	return{
+
+		getPersonas: personas, 
+		agregarPersonas: agregarPersonas
+	};
+});
+//Controler
+
+app.controller('PersonController', function($scope,PersonasFactory){
+	$scope.personas = [];
+	PersonasFactory.getPersonas().then(
+			function(data){
+				$scope.personas = data}
+			);
+	
+	$scope.addPerson = function(){
+		alert('Agregar Persona');
+	}
+	
+	$scope.savePersons = function(){
+		alert('Guardar TODOS LOS CAMBIOS');
+	}
+});
+
+
+</script>
+<title>Web</title>
+</head>
+<body>
+	<div style="background-color:#fcf;width:500px;heigth:200px;" ng-controller="PersonController">
+		<input type="button" id="btn" value="Buscar info Servlet" />
+		<table border="1" id="tbl">
+			<tr ng-repeat="person in personas">
+				<td>{{person.dni}}</td><td>{{person.nombre}}</td><td>{{person.apellido}}</td>
+			</tr>	
+		</table>
+		<input type="button" value="Agregar personas" ng-click=addPerson() >
+	</div>
+</body>
+</html>
